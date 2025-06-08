@@ -1,0 +1,7 @@
+Running numpy/scripts/m1.py
+[[START OF OUTPUT]]
+[[1. 0.]
+ [0. 1.]]
+[1. 1. 1.]
+[[END OF OUTPUT]]
+Running numpy/scripts/m2.py

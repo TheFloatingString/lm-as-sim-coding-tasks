@@ -9,8 +9,8 @@ import together
 load_dotenv()
 
 
-def run_command(provider: str, model: str, command: str):
-    with open("numpy_contents.txt", "r") as f:
+def run_command(provider: str, model: str, command: str, subfolder: str):
+    with open(f"{subfolder}_contents.txt", "r") as f:
         directory_contents = f.read()
 
     if provider == "openai":
@@ -26,6 +26,21 @@ def run_command(provider: str, model: str, command: str):
             ],
         )
         print(response.choices[0].message.content)
+
+    elif provider == "together":
+        together_client = together.Together(api_key=os.getenv("TOGETHER_API_KEY"))
+        response = together_client.chat.completions.create(
+            model=model,
+            messages=[
+                {
+                    "role": "system",
+                    "content": f"You are a MacOS operating system. Given the following folder directory, when the user sends a terminal command, respond with the output of the command. Only return the output of the command, no other text.\n\nDirectory contents:\n\n{directory_contents}",
+                },
+                {"role": "user", "content": command},
+            ],
+        )
+        print(response.choices[0].message.content)
+
     elif provider == "anthropic":
         client = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
 
@@ -61,6 +76,14 @@ if __name__ == "__main__":
     parser.add_argument(
         "--model", type=str, help="The model to use", default="gpt-4o-mini"
     )
+    parser.add_argument(
+        "--subfolder", type=str, help="The subfolder to use", default="numpy"
+    )
     parser.add_argument("--command", type=str, help="The command to run")
     args = parser.parse_args()
-    run_command(provider=args.provider, model=args.model, command=args.command)
+    run_command(
+        provider=args.provider,
+        model=args.model,
+        command=args.command,
+        subfolder=args.subfolder,
+    )

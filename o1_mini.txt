@@ -1,0 +1,4 @@
+Running numpy/scripts/m1.py
+Running numpy/scripts/m2.py
+Running numpy/scripts/m3.py
+Running numpy/scripts/m4.py
