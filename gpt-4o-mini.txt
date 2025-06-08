@@ -1,7 +1,22 @@
-Running numpy/scripts/m1.py
-[[START OF OUTPUT]]
-[[1. 0.]
- [0. 1.]]
-[1. 1. 1.]
-[[END OF OUTPUT]]
-Running numpy/scripts/m2.py
+--------------------------------
+Running restapi/scripts/m1.py
+```json
+{"message": "Hello World"}
+```
+Running restapi/scripts/m2.py
+{"item_id": 0}
+Running restapi/scripts/m3.py
+Traceback (most recent call last):
+  File "main.py", line 1, in <module>
+    import fastapi
+ModuleNotFoundError: No module named 'fastapi'
+Running restapi/scripts/m4.py
+{"item_id":1,"item":{"name":"item1"}}
+Running restapi/scripts/m5.py
+```plaintext
+INFO:     Started server process [12345]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:12345 - "DELETE /items/1 HTTP/1.1" 200 OK
+```
