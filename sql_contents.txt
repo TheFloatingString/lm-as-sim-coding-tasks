@@ -1,0 +1,205 @@
+sql/.python-version:
+[[START OF FILE]]
+3.10
+
+[[END OF FILE]]
+
+sql/README.md:
+[[START OF FILE]]
+
+[[END OF FILE]]
+
+sql/main.py:
+[[START OF FILE]]
+import sqlite3
+
+
+def main():
+    print("Hello from sql!")
+    con = sqlite3.connect("tmp.db")
+    cur = con.cursor()
+
+    cur.execute("CREATE TABLE movie(title, year, score)")
+
+
+if __name__ == "__main__":
+    main()
+
+[[END OF FILE]]
+
+sql/pyproject.toml:
+[[START OF FILE]]
+[project]
+name = "sql"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = []
+
+[[END OF FILE]]
+
+sql/results.jsonl:
+[[START OF FILE]]
+{
+  "command": "uv run main.py",
+  "output": "Hello from sql!"
+}
+{
+  "command": "uv run m1.py",
+  "output": "Hello from sql!
+[]"
+}
+{
+  "command": "uv run m2.py",
+  "output": "Hello from sql!
+[('Star Wars', 1977, 8.6), ('The Empire Strikes Back', 1980, 8.7), ('Return of the Jedi', 1983, 8.3)]"
+}
+{
+  "command": "uv run m3.py",
+  "output": "Hello from sql!
+[('Return of the Jedi', 1983, 8.3)]"
+}
+{
+  "command": "uv run m4.py",
+  "output": "Hello from sql!
+[('Return of the Jedi', 1983, 9.0)]"
+}
+{
+  "command": "uv run m5.py",
+  "output": "Hello from sql!
+[('The Dark Knight', 2008, 9.0, 'Christopher Nolan'), ('Star Wars', 1977, 8.6, None), ('The Empire Strikes Back', 1980, 8.7, None), ('Return of the Jedi', 1983, 8.3, None)]"
+}
+[[END OF FILE]]
+
+sql/scripts/m1.py:
+[[START OF FILE]]
+import sqlite3
+
+
+def main():
+    print("Hello from sql!")
+    con = sqlite3.connect("tmp.db")
+    cur = con.cursor()
+
+    cur.execute("SELECT * FROM movie")
+    print(cur.fetchall())
+
+
+if __name__ == "__main__":
+    main()
+
+[[END OF FILE]]
+
+sql/scripts/m2.py:
+[[START OF FILE]]
+import sqlite3
+
+
+def main():
+    print("Hello from sql!")
+    con = sqlite3.connect("tmp.db")
+    cur = con.cursor()
+
+    cur.execute("INSERT INTO movie(title, year, score) VALUES ('Star Wars', 1977, 8.6)")
+    cur.execute(
+        "INSERT INTO movie(title, year, score) VALUES ('The Empire Strikes Back', 1980, 8.7)"
+    )
+    cur.execute(
+        "INSERT INTO movie(title, year, score) VALUES ('Return of the Jedi', 1983, 8.3)"
+    )
+    con.commit()
+
+    cur.execute("SELECT * FROM movie")
+    print(cur.fetchall())
+
+
+if __name__ == "__main__":
+    main()
+
+[[END OF FILE]]
+
+sql/scripts/m3.py:
+[[START OF FILE]]
+import sqlite3
+
+
+def main():
+    print("Hello from sql!")
+    con = sqlite3.connect("tmp.db")
+    cur = con.cursor()
+
+    cur.execute("SELECT * FROM movie WHERE year > 1980")
+    print(cur.fetchall())
+
+
+if __name__ == "__main__":
+    main()
+
+[[END OF FILE]]
+
+sql/scripts/m4.py:
+[[START OF FILE]]
+import sqlite3
+
+
+def main():
+    print("Hello from sql!")
+    con = sqlite3.connect("tmp.db")
+    cur = con.cursor()
+
+    # alter existing row
+    cur.execute("UPDATE movie SET score = 9.0 WHERE title = 'Return of the Jedi'")
+    con.commit()
+
+    cur.execute("SELECT * FROM movie WHERE year > 1980")
+    print(cur.fetchall())
+
+
+if __name__ == "__main__":
+    main()
+
+[[END OF FILE]]
+
+sql/scripts/m5.py:
+[[START OF FILE]]
+import sqlite3
+
+
+def main():
+    print("Hello from sql!")
+    con = sqlite3.connect("tmp.db")
+    cur = con.cursor()
+
+    # add a new column called director
+    cur.execute("ALTER TABLE movie ADD COLUMN director TEXT")
+    con.commit()
+
+    # insert a new row
+    cur.execute(
+        "INSERT INTO movie(title, year, score, director) VALUES ('The Dark Knight', 2008, 9.0, 'Christopher Nolan')"
+    )
+    con.commit()
+
+    cur.execute("SELECT * FROM movie")
+    print(cur.fetchall())
+
+
+if __name__ == "__main__":
+    main()
+
+[[END OF FILE]]
+
+sql/uv.lock:
+[[START OF FILE]]
+version = 1
+revision = 2
+requires-python = ">=3.10"
+
+[[package]]
+name = "sql"
+version = "0.1.0"
+source = { virtual = "." }
+
+[[END OF FILE]]
+
